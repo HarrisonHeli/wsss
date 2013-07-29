@@ -1,39 +1,39 @@
 #include "webslide.h"
 
-webslide::webslide(QObject *parent) :
+WebSlide::WebSlide(QObject *parent) :
     QObject(parent)
 {
 }
 
-void webslide::setUrl(const QString& new_url)
+void WebSlide::setUrl(const QString& new_url)
 {
     string_url = new_url;
 }
 
-QString webslide::getUrl()
+QString WebSlide::getUrl()
 {
     return string_url;
 }
 
 
 
-void webslide::setShowTime(unsigned int new_show_time)
+void WebSlide::setShowTime(unsigned int new_show_time)
 {
     show_time = new_show_time;
 }
 
-unsigned int webslide::getShowTime()
+unsigned int WebSlide::getShowTime()
 {
     return show_time;
 }
 
-void webslide::setZoomRatio(double new_zoom_ratio)
+void WebSlide::setZoomRatio(double new_zoom_ratio)
 {
     zoom_ratio = new_zoom_ratio;
 
 }
 
-double webslide::getZoomRatio()
+double WebSlide::getZoomRatio()
 {
     return zoom_ratio;
 }

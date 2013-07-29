@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QtWebKit>
 
+#include"webslide.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -20,6 +22,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QList<WebSlide> list_webslide;
 };
 
 #endif // MAINWINDOW_H

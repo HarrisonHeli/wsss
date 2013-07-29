@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-class webslide : public QObject
+class WebSlide : public QObject
 {
     Q_OBJECT
 
@@ -12,7 +12,7 @@ class webslide : public QObject
     double zoom_ratio;
 
 public:
-    explicit webslide(QObject *parent = 0);
+    explicit WebSlide(QObject *parent = 0);
 
     void setUrl(const QString& new_url);
     QString getUrl();

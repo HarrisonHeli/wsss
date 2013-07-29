@@ -17,6 +17,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    //Setup the webView
    ui->webView->setZoomFactor(0.7);
 
+
+
+
 }
 
 
