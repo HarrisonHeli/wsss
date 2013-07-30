@@ -1,18 +1,17 @@
 #ifndef WEBSLIDE_H
 #define WEBSLIDE_H
+#include <QString>
 
-#include <QObject>
-
-class WebSlide : public QObject
+class WebSlide
 {
-    Q_OBJECT
 
     QString string_url;
     unsigned int show_time;
     double zoom_ratio;
 
 public:
-    explicit WebSlide(QObject *parent = 0);
+    WebSlide();
+    WebSlide(const WebSlide& ori_webslide);
 
     void setUrl(const QString& new_url);
     QString getUrl();
@@ -23,9 +22,6 @@ public:
     void setZoomRatio(double new_zoom_ratio);
     double getZoomRatio();
     
-signals:
-    
-public slots:
     
 };
 

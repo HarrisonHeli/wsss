@@ -20,9 +20,17 @@ public:
     
     void loadUrl(const QUrl& url);
 
+
 private:
     Ui::MainWindow *ui;
     QList<WebSlide> list_webslide;
+    unsigned int next_webslide;
+
+
+private slots:
+    void changeSlide();
+
+
 };
 
 #endif // MAINWINDOW_H

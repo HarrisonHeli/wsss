@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
         url = QUrl("http://www.google.com/ncr");
 
     MainWindow w;
-    w.loadUrl(url);
+   // w.loadUrl(url);
     w.show();
     
     return a.exec();
