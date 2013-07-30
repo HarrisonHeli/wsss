@@ -6,9 +6,9 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
    ui->setupUi(this);
+   this->showMaximized();
 
    //Setup the toolbar
-
    ui->mainToolBar->addAction(ui->webView->pageAction(QWebPage::Back));
    ui->mainToolBar->addAction(ui->webView->pageAction(QWebPage::Forward));
    ui->mainToolBar->addAction(ui->webView->pageAction(QWebPage::Reload));
@@ -16,8 +16,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
    //Setup the webView
    ui->webView->setZoomFactor(1.0);
-
-   loadUrlFromFile();
 
    next_webslide = 0;
 
@@ -46,7 +44,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
    list_webslide.append(webslide);
 
-
    loadUrlFromFile();
    changeSlide();
 
@@ -62,27 +59,32 @@ file.open(QIODevice::ReadOnly | QIODevice::Text);
 settings = file.readAll();
 file.close();
 
-QJsonDocument jd = QJsonDocument::fromJson(settings.toUtf8());
+QJsonDocument js_doc = QJsonDocument::fromJson(settings.toUtf8());
 
-if (jd.isNull()) return;
+    if (js_doc.isNull()) return;
 
-//if (!jd.isArray()) return;
+QJsonObject js_webslide = js_doc.object();
 
-QJsonArray ja_webslides = jd.array();
+    if (js_webslide.isEmpty()) return;
 
-WebSlide new_webslide;
+QJsonArray js_webslide_array = js_webslide.find("webslides").value().toArray();
+
+    if (js_webslide_array.isEmpty()) return;
+
+WebSlide webslide;
 list_webslide.clear();
 
-for (int index = 0; index >= ja_webslides.count(); index ++)
+for (int index =0; index < js_webslide_array.count(); index ++)
     {
-    QJsonValueRef jo_single_webslide = ja_webslides[index];
+    QJsonValueRef js_webslide_data =  js_webslide_array[index];
+    webslide.setUrl(js_webslide_data.toObject().find("url").value().toString());
+    webslide.setShowTime(js_webslide_data.toObject().find("showtime").value().toDouble());
+    webslide.setZoomRatio(js_webslide_data.toObject().find("zoomratio").value().toDouble());
 
-    new_webslide.setUrl(jo_single_webslide.toString());
-    new_webslide.setShowTime(jo_single_webslide.toDouble());
-    new_webslide.setZoomRatio(jo_single_webslide.toDouble());
-
-    list_webslide.append(new_webslide);
+    list_webslide.append(webslide);
     }
+
+
 
 
 }
@@ -103,6 +105,7 @@ void MainWindow::changeSlide()
         next_webslide = 0;
         }
 
+    ui->webView->hide();
     loadUrl(QUrl::fromUserInput(list_webslide[next_webslide].getUrl()));
     ui->webView->setZoomFactor(list_webslide[next_webslide].getZoomRatio());
     unsigned int timeout = list_webslide[next_webslide].getShowTime();
@@ -111,6 +114,7 @@ void MainWindow::changeSlide()
     QTimer::singleShot(timeout, this, SLOT(changeSlide()));
 
     next_webslide ++;
+    ui->webView->show();
 }
 
 MainWindow::~MainWindow()

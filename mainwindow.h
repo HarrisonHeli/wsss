@@ -6,6 +6,8 @@
 #include <QFile>
 #include <QJsonDocument>
 
+
+
 #include"webslide.h"
 
 namespace Ui {
@@ -26,7 +28,7 @@ public:
 private:
     Ui::MainWindow *ui;
     QList<WebSlide> list_webslide;
-    unsigned int next_webslide;
+    int next_webslide;
 
     void loadUrlFromFile();
 
