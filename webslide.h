@@ -4,7 +4,7 @@
 
 class WebSlide
 {
-
+    QString string_name;
     QString string_url;
     unsigned int show_time;
     double zoom_ratio;
@@ -12,6 +12,9 @@ class WebSlide
 public:
     WebSlide();
     WebSlide(const WebSlide& ori_webslide);
+
+    void setName(const QString& new_name);
+    QString getName();
 
     void setUrl(const QString& new_url);
     QString getUrl();

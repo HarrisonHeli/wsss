@@ -77,16 +77,13 @@ list_webslide.clear();
 for (int index =0; index < js_webslide_array.count(); index ++)
     {
     QJsonValueRef js_webslide_data =  js_webslide_array[index];
+    webslide.setName(js_webslide_data.toObject().find("name").value().toString());
     webslide.setUrl(js_webslide_data.toObject().find("url").value().toString());
     webslide.setShowTime(js_webslide_data.toObject().find("showtime").value().toDouble());
     webslide.setZoomRatio(js_webslide_data.toObject().find("zoomratio").value().toDouble());
 
     list_webslide.append(webslide);
     }
-
-
-
-
 }
 
 
@@ -106,15 +103,20 @@ void MainWindow::changeSlide()
         }
 
     ui->webView->hide();
-    loadUrl(QUrl::fromUserInput(list_webslide[next_webslide].getUrl()));
+    ui->webView->load(QUrl::fromUserInput(list_webslide[next_webslide].getUrl()));
     ui->webView->setZoomFactor(list_webslide[next_webslide].getZoomRatio());
     unsigned int timeout = list_webslide[next_webslide].getShowTime();
 
+
+    QString name = QString("wsss - ") + list_webslide[next_webslide].getName() + QString(" - ") + list_webslide[next_webslide].getUrl();
+    this->setWindowTitle(name) ;
 
     QTimer::singleShot(timeout, this, SLOT(changeSlide()));
 
     next_webslide ++;
     ui->webView->show();
+
+
 }
 
 MainWindow::~MainWindow()
