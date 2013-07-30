@@ -17,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    //Setup the webView
    ui->webView->setZoomFactor(1.0);
 
+   loadUrlFromFile();
+
    next_webslide = 0;
 
    WebSlide webslide;
@@ -45,11 +47,46 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    list_webslide.append(webslide);
 
 
+   loadUrlFromFile();
    changeSlide();
 
-   //loadUrl(QUrl::fromUserInput(list_webslide.first().getUrl()));
 
 }
+
+void MainWindow::loadUrlFromFile()
+{
+QString settings;
+QFile file;
+file.setFileName("/home/harrisonheli/settings.json");
+file.open(QIODevice::ReadOnly | QIODevice::Text);
+settings = file.readAll();
+file.close();
+
+QJsonDocument jd = QJsonDocument::fromJson(settings.toUtf8());
+
+if (jd.isNull()) return;
+
+//if (!jd.isArray()) return;
+
+QJsonArray ja_webslides = jd.array();
+
+WebSlide new_webslide;
+list_webslide.clear();
+
+for (int index = 0; index >= ja_webslides.count(); index ++)
+    {
+    QJsonValueRef jo_single_webslide = ja_webslides[index];
+
+    new_webslide.setUrl(jo_single_webslide.toString());
+    new_webslide.setShowTime(jo_single_webslide.toDouble());
+    new_webslide.setZoomRatio(jo_single_webslide.toDouble());
+
+    list_webslide.append(new_webslide);
+    }
+
+
+}
+
 
 
 void MainWindow::loadUrl(const QUrl &url)

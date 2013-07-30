@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QtWebKit>
+#include <QFile>
+#include <QJsonDocument>
 
 #include"webslide.h"
 
@@ -25,6 +27,8 @@ private:
     Ui::MainWindow *ui;
     QList<WebSlide> list_webslide;
     unsigned int next_webslide;
+
+    void loadUrlFromFile();
 
 
 private slots:
