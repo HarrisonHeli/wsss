@@ -54,7 +54,7 @@ void MainWindow::loadUrlFromFile()
 {
 QString settings;
 QFile file;
-file.setFileName("/home/harrisonheli/settings.json");
+file.setFileName("settings.json");
 file.open(QIODevice::ReadOnly | QIODevice::Text);
 settings = file.readAll();
 file.close();
