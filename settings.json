@@ -1,0 +1,11 @@
+{"webslides":[
+{"name":"BOM Forcast","url":"http://www.bom.gov.au/vic/forecasts/melbourne.shtml","showtime":15000,"zoomratio":0.7},
+
+{"name":"BOM RADAR","url":"http://www.bom.gov.au/products/IDR024.loop.shtml#skip/","showtime":20000,"zoomratio":0.9},
+
+{"name":"BOM TAF","url":"file:///home/harrisonheli/bom-wx/bom-taf-ymmb-ymen.html","showtime":20000,"zoomratio":0.8},
+
+{"name":"Pilot Dates","url":"https://docs.google.com/spreadsheet/pub?key=0Ag-DRZCGuBxFdGRFTFE5SEpFbUIxZ3NDYUpjOU5lR0E&output=html","showtime":20000,"zoomratio":1},
+
+{"name":"Reddit","url":"http://reddit.com","showtime":10000,"zoomratio":0.65}
+]}
