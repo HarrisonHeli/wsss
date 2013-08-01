@@ -28,6 +28,7 @@ public:
 private:
     Ui::MainWindow *ui;
     QList<WebSlide> list_webslide;
+
     int next_webslide;
     int current_webslide;
 
@@ -39,6 +40,7 @@ private:
 
     void changeSlideForward();
     void changeSlideBack();
+
 
 private slots:
     void changeSlide(bool go_forward = true);

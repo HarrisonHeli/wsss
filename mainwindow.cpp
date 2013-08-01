@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
    ui->setupUi(this);
    this->showMaximized();
-
+   ui->webView_2->hide();
    //Setup the toolbar
    ui->mainToolBar->addAction(ui->webView->pageAction(QWebPage::Back));
    ui->mainToolBar->addAction(ui->webView->pageAction(QWebPage::Forward));
@@ -128,18 +128,33 @@ void MainWindow::changeSlide(bool go_forward)
         else next_webslide = current_webslide -1;
         }
 
-    ui->webView->hide();
-    ui->webView->load(QUrl::fromUserInput(list_webslide[next_webslide].getUrl()));
-    ui->webView->setZoomFactor(list_webslide[next_webslide].getZoomRatio());
-    unsigned int timeout = list_webslide[next_webslide].getShowTime();
 
+    if (ui->webView->isHidden())
+    {
+        ui->webView_2->hide();
+        ui->webView->show();
+
+        ui->webView_2->load(QUrl::fromUserInput(list_webslide[next_webslide].getUrl()));
+        ui->webView_2->setZoomFactor(list_webslide[next_webslide].getZoomRatio());
+
+    }
+    else
+    {
+        ui->webView->hide();
+        ui->webView_2->show();
+
+        ui->webView->load(QUrl::fromUserInput(list_webslide[next_webslide].getUrl()));
+        ui->webView->setZoomFactor(list_webslide[next_webslide].getZoomRatio());
+
+    }
+
+    current_webslide = next_webslide;
+    unsigned int timeout = list_webslide[next_webslide].getShowTime();
+    timerWebSlide.start(timeout);
 
     QString name = QString("wsss - ") + list_webslide[next_webslide].getName() + QString(" - ") + list_webslide[next_webslide].getUrl();
     this->setWindowTitle(name) ;
 
-    ui->webView->show();
-    current_webslide = next_webslide;
-    timerWebSlide.start(timeout);
 
 }
 
