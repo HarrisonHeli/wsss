@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    current_webslide = -1;
 
    WebSlide webslide;
-   webslide.setUrl("http://www.bom.gov.au/vic/forecasts/melbourne.shtml");
+   webslide.setUrl("http://json.parser.online.fr/");
    webslide.setShowTime(15000);
    webslide.setZoomRatio(0.5);
 
