@@ -23,7 +23,7 @@ public:
     ~MainWindow();
     
     void loadUrl(const QUrl& url);
-
+    void keyPressEvent( QKeyEvent* event );
 
 private:
     Ui::MainWindow *ui;
@@ -32,6 +32,7 @@ private:
 
     void loadUrlFromFile();
 
+    void changeFullScreenMode();
 
 private slots:
     void changeSlide();

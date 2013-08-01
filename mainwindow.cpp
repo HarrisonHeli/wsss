@@ -94,6 +94,20 @@ void MainWindow::loadUrl(const QUrl &url)
     ui->webView->load(url);
 }
 
+void MainWindow::keyPressEvent( QKeyEvent* event ) {
+    switch ( event->key() ) {
+    case Qt::Key_Escape:    changeFullScreenMode(); break;
+
+    case Qt::Key_F11:       changeFullScreenMode(); break;
+
+    case Qt::Key_Right:   changeSlide(); break;
+
+    default:
+        event->ignore();
+        break;
+    }
+}
+
 
 void MainWindow::changeSlide()
 {
@@ -117,6 +131,20 @@ void MainWindow::changeSlide()
     ui->webView->show();
 
 
+}
+
+void MainWindow::changeFullScreenMode()
+{
+    if (this->isFullScreen())
+        {
+        this->showMaximized();
+        ui->mainToolBar->show();
+        }
+    else
+        {
+        this->showFullScreen();
+        ui->mainToolBar->hide();
+        }
 }
 
 MainWindow::~MainWindow()
