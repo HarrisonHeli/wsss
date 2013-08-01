@@ -29,6 +29,7 @@ private:
     Ui::MainWindow *ui;
     QList<WebSlide> list_webslide;
     int next_webslide;
+    QTimer timerWebSlide;
 
     void loadUrlFromFile();
 

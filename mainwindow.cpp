@@ -5,6 +5,8 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
+   connect(&timerWebSlide, SIGNAL(timeout()), this, SLOT(changeSlide()));
+
    ui->setupUi(this);
    this->showMaximized();
 
@@ -100,7 +102,7 @@ void MainWindow::keyPressEvent( QKeyEvent* event ) {
 
     case Qt::Key_F11:       changeFullScreenMode(); break;
 
-    case Qt::Key_Right:   changeSlide(); break;
+    case Qt::Key_Right:     changeSlide(); break;
 
     default:
         event->ignore();
@@ -125,7 +127,8 @@ void MainWindow::changeSlide()
     QString name = QString("wsss - ") + list_webslide[next_webslide].getName() + QString(" - ") + list_webslide[next_webslide].getUrl();
     this->setWindowTitle(name) ;
 
-    QTimer::singleShot(timeout, this, SLOT(changeSlide()));
+    timerWebSlide.stop();
+    timerWebSlide.start(timeout);
 
     next_webslide ++;
     ui->webView->show();
