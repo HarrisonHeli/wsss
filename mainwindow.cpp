@@ -8,8 +8,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    connect(&timerWebSlide, SIGNAL(timeout()), this, SLOT(changeSlide()));
 
    ui->setupUi(this);
-   this->showMaximized();
    ui->webView_2->hide();
+
+   changeFullScreenMode();
+
+
    //Setup the toolbar
    ui->mainToolBar->addAction(ui->webView->pageAction(QWebPage::Back));
    ui->mainToolBar->addAction(ui->webView->pageAction(QWebPage::Forward));
