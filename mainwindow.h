@@ -29,14 +29,20 @@ private:
     Ui::MainWindow *ui;
     QList<WebSlide> list_webslide;
     int next_webslide;
+    int current_webslide;
+
     QTimer timerWebSlide;
 
     void loadUrlFromFile();
 
     void changeFullScreenMode();
 
+    void changeSlideForward();
+    void changeSlideBack();
+
 private slots:
-    void changeSlide();
+    void changeSlide(bool go_forward = true);
+
 
 
 };

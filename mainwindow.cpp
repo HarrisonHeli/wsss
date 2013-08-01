@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    //Setup the webView
    ui->webView->setZoomFactor(1.0);
 
-   next_webslide = 0;
+   current_webslide = -1;
 
    WebSlide webslide;
    webslide.setUrl("http://www.bom.gov.au/vic/forecasts/melbourne.shtml");
@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    list_webslide.append(webslide);
 
    loadUrlFromFile();
-   changeSlide();
+   changeSlide(true);
 
 
 }
@@ -102,7 +102,9 @@ void MainWindow::keyPressEvent( QKeyEvent* event ) {
 
     case Qt::Key_F11:       changeFullScreenMode(); break;
 
-    case Qt::Key_Right:     changeSlide(); break;
+    case Qt::Key_Right:     changeSlideForward(); break;
+
+    case Qt::Key_Left:     changeSlideBack(); break;
 
     default:
         event->ignore();
@@ -111,11 +113,19 @@ void MainWindow::keyPressEvent( QKeyEvent* event ) {
 }
 
 
-void MainWindow::changeSlide()
+void MainWindow::changeSlide(bool go_forward)
 {
-    if (next_webslide >= list_webslide.count())
+    timerWebSlide.stop();
+
+    if(go_forward)
         {
-        next_webslide = 0;
+        if ( current_webslide >= list_webslide.count()-1) next_webslide = 0;
+        else next_webslide = current_webslide + 1;
+        }
+    else    //go back
+        {
+        if (current_webslide  == 0) next_webslide = list_webslide.count()-1;
+        else next_webslide = current_webslide -1;
         }
 
     ui->webView->hide();
@@ -127,14 +137,16 @@ void MainWindow::changeSlide()
     QString name = QString("wsss - ") + list_webslide[next_webslide].getName() + QString(" - ") + list_webslide[next_webslide].getUrl();
     this->setWindowTitle(name) ;
 
-    timerWebSlide.stop();
+    ui->webView->show();
+    current_webslide = next_webslide;
     timerWebSlide.start(timeout);
 
-    next_webslide ++;
-    ui->webView->show();
-
-
 }
+
+void MainWindow::changeSlideForward(){changeSlide(true);}
+
+void MainWindow::changeSlideBack(){changeSlide(false);}
+
 
 void MainWindow::changeFullScreenMode()
 {
