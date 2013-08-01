@@ -151,9 +151,11 @@ void MainWindow::changeSlide(bool go_forward)
 
     }
 
-    current_webslide = next_webslide;
+
     unsigned int timeout = list_webslide[next_webslide].getShowTime();
     timerWebSlide.start(timeout);
+
+    current_webslide = next_webslide;
 
     QString name = QString("wsss - ") + list_webslide[next_webslide].getName() + QString(" - ") + list_webslide[next_webslide].getUrl();
     this->setWindowTitle(name) ;
