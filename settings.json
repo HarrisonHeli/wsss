@@ -3,9 +3,25 @@
 
 {"name":"BOM RADAR","url":"http://www.bom.gov.au/products/IDR024.loop.shtml#skip/","showtime":20000,"zoomratio":0.9},
 
-{"name":"BOM TAF","url":"file:///home/harrisonheli/bom-wx/bom-taf-ymmb-ymen.html","showtime":20000,"zoomratio":0.8},
+{"name":"BOM Short Range","url":"http://www.bom.gov.au/australia/charts/4day_col.shtml","showtime":15000,"zoomratio":0.5},
 
-{"name":"Pilot Dates","url":"https://docs.google.com/spreadsheet/pub?key=0Ag-DRZCGuBxFdGRFTFE5SEpFbUIxZ3NDYUpjOU5lR0E&output=html","showtime":20000,"zoomratio":1},
+{"name":"BOM Chart","url":"http://www.bom.gov.au/australia/charts/4day_col.shtml","showtime":15000,"zoomratio":0.9},
 
-{"name":"Reddit","url":"http://reddit.com","showtime":10000,"zoomratio":0.65}
+{"name":"BOM TAF YMMB","url":"file:///home/heliserv/bom-wx/bom-taf-ymmb.html","showtime":15000,"zoomratio":0.9},
+
+{"name":"BOM TAF YMEN","url":"file:///home/heliserv/bom-wx/bom-taf-ymen.html","showtime":15000,"zoomratio":0.9},
+
+{"name":"BOM TAF YMBLT","url":"file:///home/heliserv/bom-wx/bom-taf-yblt.html","showtime":13000,"zoomratio":0.9},
+
+{"name":"BOM TAF YLVT","url":"file:///home/heliserv/bom-wx/bom-taf-ylvt.html","showtime":14000,"zoomratio":0.9},
+
+{"name":"BOM TAF YKII","url":"file:///home/heliserv/bom-wx/bom-taf-ykii.html","showtime":16000,"zoomratio":0.9},
+
+{"name":"GDOC CURRANCY","url":"https://docs.google.com/spreadsheet/pub?key=0Ag-DRZCGuBxFdGRFTFE5SEpFbUIxZ3NDYUpjOU5lR0E&output=html","showtime":15000,"zoomratio":1},
+
+{"name":"GDOC NVFR-NVG","url":"https://docs.google.com/spreadsheet/pub?key=0Ag-DRZCGuBxFdGRFTFE5SEpFbUIxZ3NDYUpjOU5lR0E&single=true&gid=1&output=html","showtime":15000,"zoomratio":1},
+
+{"name":"Reddit","url":"http://reddit.com","showtime":16000,"zoomratio":0.4},
+
 ]}
+
