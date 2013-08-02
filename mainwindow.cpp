@@ -107,7 +107,7 @@ void MainWindow::createWebSlides()
         new_webview->setUrl(list_webslide[index].getUrl());
         new_webview->setZoomFactor(list_webslide[index].getZoomRatio());
 
-        //new_webview->show();
+        new_webview->hide();
 
         ui->centralWidget->layout()->addWidget(new_webview);
         }
@@ -151,7 +151,7 @@ void MainWindow::changeSlide(bool go_forward)
         }
     else    //go back
         {
-        if (current_webslide_index <=0)
+        if (current_webslide_index == 0)
             { webslide_to_show_index = list_webslide.count() -1; }
          else  webslide_to_show_index = current_webslide_index -1;
         }
@@ -170,15 +170,18 @@ void MainWindow::changeSlide(bool go_forward)
 
 
     nameWebView = QString("webview")  + QString::number(current_webslide_index);
-    currentWebView = ui->centralWidget->layout()->findChild<QWebView *>(nameWebView);
+    currentWebView = ui->centralWidget->findChild<QWebView *>(nameWebView);
 
     nameWebView = QString("webview") + QString::number(webslide_to_show_index);
-    nextWebView = ui->centralWidget->layout()->findChild<QWebView *>(nameWebView);
+    nextWebView = ui->centralWidget->findChild<QWebView *>(nameWebView);
 
     currentWebView->hide();
     currentWebView->reload();
 
     nextWebView->show();
+
+    current_webslide_index = webslide_to_show_index;
+
 
 }
 
