@@ -5,8 +5,8 @@
 #include <QtWebKit>
 #include <QFile>
 #include <QJsonDocument>
-
-
+#include <QLCDNumber>
+#include <QLabel>
 
 #include"webslide.h"
 
@@ -33,6 +33,10 @@ private:
 
 
     QTimer timerWebSlide;
+    QTimer timerClock;
+
+    QLabel *timeUTC;
+    QLabel *timeLMT;
 
     void loadUrlFromFile();
     void createWebSlides();
@@ -46,7 +50,7 @@ private:
 private slots:
     void changeSlide(bool go_forward = true);
 
-
+    void updateClocks();
 
 };
 

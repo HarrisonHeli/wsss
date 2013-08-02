@@ -36,15 +36,6 @@
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QWebView" name="webView_2">
-      <property name="url">
-       <url>
-        <string>about:blank</string>
-       </url>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="mainMenuBar">

@@ -6,19 +6,33 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
    connect(&timerWebSlide, SIGNAL(timeout()), this, SLOT(changeSlide()));
+   connect(&timerClock,SIGNAL(timeout()), this, SLOT(updateClocks()));
 
    ui->setupUi(this);
-   ui->webView_2->hide();
    ui->webView->hide();
 
    changeFullScreenMode();
-
 
    //Setup the toolbar
    ui->mainToolBar->addAction(ui->webView->pageAction(QWebPage::Back));
    ui->mainToolBar->addAction(ui->webView->pageAction(QWebPage::Forward));
    ui->mainToolBar->addAction(ui->webView->pageAction(QWebPage::Reload));
    ui->mainToolBar->addAction(ui->webView->pageAction(QWebPage::Stop));
+
+   timeUTC = new QLabel;
+   timeLMT = new QLabel;
+
+   QFont font = timeUTC->font ();
+   font.setPointSize(20);//set the font size here
+   timeUTC->setFont(font);
+
+   font = timeLMT->font ();
+   font.setPointSize(20);//set the font size here
+   timeLMT->setFont(font);
+
+
+   ui->mainToolBar->addWidget(timeUTC);
+   ui->mainToolBar->addWidget(timeLMT);
 
    //Setup the webView
    ui->webView->setZoomFactor(1.0);
@@ -49,6 +63,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    webslide.setZoomRatio(1);
 
    list_webslide.append(webslide);
+
+   updateClocks();
 
    loadUrlFromFile();
    createWebSlides();
@@ -179,15 +195,20 @@ void MainWindow::changeSlide(bool go_forward)
     currentWebView->reload();
 
     nextWebView->show();
+    nextWebView->setFocus();
 
     current_webslide_index = webslide_to_show_index;
 
 
 }
 
+//These are wrapper functuins so the the key press actionscan call them directly
+// and not have to pass parameters to indicate the direction requred.
+
 void MainWindow::changeSlideForward(){changeSlide(true);}
 
 void MainWindow::changeSlideBack(){changeSlide(false);}
+
 
 
 void MainWindow::changeFullScreenMode()
@@ -200,8 +221,26 @@ void MainWindow::changeFullScreenMode()
     else
         {
         this->showFullScreen();
-        ui->mainToolBar->hide();
+        //ui->mainToolBar->hide();
         }
+}
+
+
+void MainWindow::updateClocks()
+{
+timerClock.setSingleShot(true);
+timerClock.start(1000);
+
+QDateTime utc_date_time = QDateTime::currentDateTimeUtc();
+
+QDateTime local_date_time = QDateTime::currentDateTime();
+
+
+
+timeUTC->setText(utc_date_time.toString(" dd-hh:mm:ss") + " UTC ");
+
+timeLMT->setText(local_date_time.toString(" dd-hh:mm:ss") + " LMT ");
+
 }
 
 MainWindow::~MainWindow()
