@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
    ui->setupUi(this);
    ui->webView_2->hide();
+   ui->webView->hide();
 
    changeFullScreenMode();
 
@@ -22,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    //Setup the webView
    ui->webView->setZoomFactor(1.0);
 
-   current_webslide = -1;
+   current_webslide_index = 0;
 
    WebSlide webslide;
    webslide.setUrl("http://json.parser.online.fr/");
@@ -50,6 +51,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    list_webslide.append(webslide);
 
    loadUrlFromFile();
+   createWebSlides();
    changeSlide(true);
 
 
@@ -91,7 +93,25 @@ for (int index =0; index < js_webslide_array.count(); index ++)
     }
 }
 
+void MainWindow::createWebSlides()
+{
+    for (int index =0; index < list_webslide.count(); index ++)
+        {
+        QWebView *new_webview = new QWebView();
 
+        //So we can call the webview when we need it
+        QString newObjectName = QString("webview") + QString::number(index);
+
+        new_webview->setObjectName(newObjectName);
+
+        new_webview->setUrl(list_webslide[index].getUrl());
+        new_webview->setZoomFactor(list_webslide[index].getZoomRatio());
+
+        //new_webview->show();
+
+        ui->centralWidget->layout()->addWidget(new_webview);
+        }
+}
 
 void MainWindow::loadUrl(const QUrl &url)
 {
@@ -120,46 +140,45 @@ void MainWindow::changeSlide(bool go_forward)
 {
     timerWebSlide.stop();
 
+    int webslide_to_show_index;
+
     if(go_forward)
         {
-        if ( current_webslide >= list_webslide.count()-1) next_webslide = 0;
-        else next_webslide = current_webslide + 1;
+         if (current_webslide_index >= list_webslide.count() - 1)
+            { webslide_to_show_index = 0; }
+
+         else webslide_to_show_index = current_webslide_index + 1;
         }
     else    //go back
         {
-        if (current_webslide  == 0) next_webslide = list_webslide.count()-1;
-        else next_webslide = current_webslide -1;
+        if (current_webslide_index <=0)
+            { webslide_to_show_index = list_webslide.count() -1; }
+         else  webslide_to_show_index = current_webslide_index -1;
         }
 
 
-    if (ui->webView->isHidden())
-    {
-        ui->webView_2->hide();
-        ui->webView->show();
-
-        ui->webView_2->load(QUrl::fromUserInput(list_webslide[next_webslide].getUrl()));
-        ui->webView_2->setZoomFactor(list_webslide[next_webslide].getZoomRatio());
-
-    }
-    else
-    {
-        ui->webView->hide();
-        ui->webView_2->show();
-
-        ui->webView->load(QUrl::fromUserInput(list_webslide[next_webslide].getUrl()));
-        ui->webView->setZoomFactor(list_webslide[next_webslide].getZoomRatio());
-
-    }
-
-
-    unsigned int timeout = list_webslide[next_webslide].getShowTime();
+    unsigned int timeout = list_webslide[webslide_to_show_index].getShowTime();
     timerWebSlide.start(timeout);
 
-    current_webslide = next_webslide;
 
-    QString name = QString("wsss - ") + list_webslide[next_webslide].getName() + QString(" - ") + list_webslide[next_webslide].getUrl();
+    QString name = QString("wsss - ") + list_webslide[webslide_to_show_index].getName() + QString(" - ") + list_webslide[webslide_to_show_index].getUrl();
     this->setWindowTitle(name) ;
 
+    QWebView *currentWebView;
+    QWebView *nextWebView;
+    QString nameWebView;
+
+
+    nameWebView = QString("webview")  + QString::number(current_webslide_index);
+    currentWebView = ui->centralWidget->layout()->findChild<QWebView *>(nameWebView);
+
+    nameWebView = QString("webview") + QString::number(webslide_to_show_index);
+    nextWebView = ui->centralWidget->layout()->findChild<QWebView *>(nameWebView);
+
+    currentWebView->hide();
+    currentWebView->reload();
+
+    nextWebView->show();
 
 }
 

@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -27,8 +27,8 @@
     <property name="bottomMargin">
      <number>0</number>
     </property>
-    <item row="1" column="0">
-     <widget class="QWebView" name="webView_2">
+    <item>
+     <widget class="QWebView" name="webView">
       <property name="url">
        <url>
         <string>about:blank</string>
@@ -36,8 +36,8 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QWebView" name="webView">
+    <item>
+     <widget class="QWebView" name="webView_2">
       <property name="url">
        <url>
         <string>about:blank</string>

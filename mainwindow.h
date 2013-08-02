@@ -29,12 +29,13 @@ private:
     Ui::MainWindow *ui;
     QList<WebSlide> list_webslide;
 
-    int next_webslide;
-    int current_webslide;
+    int current_webslide_index;
+
 
     QTimer timerWebSlide;
 
     void loadUrlFromFile();
+    void createWebSlides();
 
     void changeFullScreenMode();
 
