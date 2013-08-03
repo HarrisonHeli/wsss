@@ -16,18 +16,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    //Setup the toolbar
    ui->mainToolBar->addAction(ui->webView->pageAction(QWebPage::Back));
    ui->mainToolBar->addAction(ui->webView->pageAction(QWebPage::Forward));
-   ui->mainToolBar->addAction(ui->webView->pageAction(QWebPage::Reload));
-   ui->mainToolBar->addAction(ui->webView->pageAction(QWebPage::Stop));
+
+   action_paused = ui->mainToolBar->addAction(QIcon::fromTheme("media-playback-start"),"Pause",this,SLOT(setPaused()));
+   action_resume = ui->mainToolBar->addAction(QIcon::fromTheme("media-playback-stop"),"Resume",this,SLOT(setResume()));
+
+
+   ui->mainToolBar->addSeparator();
+
 
    timeUTC = new QLabel;
    timeLMT = new QLabel;
 
    QFont font = timeUTC->font ();
-   font.setPointSize(20);//set the font size here
+   font.setPointSize(18);//set the font size here
    timeUTC->setFont(font);
 
    font = timeLMT->font ();
-   font.setPointSize(20);//set the font size here
+   font.setPointSize(18);//set the font size here
    timeLMT->setFont(font);
 
 
@@ -65,6 +70,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    list_webslide.append(webslide);
 
    updateClocks();
+   setResume();
 
    loadUrlFromFile();
    createWebSlides();
@@ -145,6 +151,8 @@ void MainWindow::keyPressEvent( QKeyEvent* event ) {
 
     case Qt::Key_Left:     changeSlideBack(); break;
 
+    case Qt::Key_P: setPauseOrResume(); break;
+
     default:
         event->ignore();
         break;
@@ -198,6 +206,7 @@ void MainWindow::changeSlide(bool go_forward)
     nextWebView->setFocus();
 
     current_webslide_index = webslide_to_show_index;
+    setResume();
 
 
 }
@@ -241,6 +250,36 @@ timeUTC->setText(utc_date_time.toString(" dd-hh:mm:ss") + " UTC ");
 
 timeLMT->setText(local_date_time.toString(" dd-hh:mm:ss") + " LMT ");
 
+}
+
+
+void MainWindow::setPauseOrResume()
+{
+    if (!paused) setPaused();
+    else setResume();
+
+
+}
+
+
+void MainWindow::setPaused()
+{
+    paused = true;
+    timerWebSlide.stop();
+    action_paused->setEnabled(false);
+    action_paused->setVisible(false);
+    action_resume->setEnabled(true);
+    action_resume->setVisible(true);
+}
+
+void MainWindow::setResume()
+{
+    paused = false;
+    timerWebSlide.start();
+    action_resume->setEnabled(false);
+    action_resume->setVisible(false);
+    action_paused->setEnabled(true);
+    action_paused->setVisible(true);
 }
 
 MainWindow::~MainWindow()

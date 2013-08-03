@@ -30,7 +30,9 @@ private:
     QList<WebSlide> list_webslide;
 
     int current_webslide_index;
-
+    bool paused;
+    QAction *action_paused;
+    QAction *action_resume;
 
     QTimer timerWebSlide;
     QTimer timerClock;
@@ -47,11 +49,14 @@ private:
     void changeSlideBack();
 
 
+
 private slots:
     void changeSlide(bool go_forward = true);
 
     void updateClocks();
-
+    void setPauseOrResume();
+    void setPaused();
+    void setResume();
 };
 
 #endif // MAINWINDOW_H
