@@ -7,6 +7,8 @@
 
 {"name":"BOM Chart","url":"http://www.bom.gov.au/australia/charts/4day_col.shtml","showtime":15000,"zoomratio":0.5},
 
+{"name":"METVUW","url":"http://www.metvuw.com/forecast/forecast.php?type=rain&region=seaussie&noofdays=2","showtime":15000,"zoomratio":0.8},
+
 {"name":"BOM TAF YMMB","url":"file:///home/harrisonheli/bom-wx/bom-taf-ymmb.html","showtime":15000,"zoomratio":0.9},
 
 {"name":"BOM TAF YMEN","url":"file:///home/harrisonheli/bom-wx/bom-taf-ymen.html","showtime":15000,"zoomratio":0.9},

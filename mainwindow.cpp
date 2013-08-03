@@ -5,6 +5,7 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
+
    connect(&timerWebSlide, SIGNAL(timeout()), this, SLOT(changeSlide()));
    connect(&timerClock,SIGNAL(timeout()), this, SLOT(updateClocks()));
 
