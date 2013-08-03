@@ -3,9 +3,9 @@
 
 {"name":"BOM RADAR","url":"http://www.bom.gov.au/products/IDR024.loop.shtml#skip/","showtime":20000,"zoomratio":0.9},
 
-{"name":"BOM Short Range","url":"http://www.bom.gov.au/australia/charts/msl_36hr_forecast.shtml","showtime":15000,"zoomratio":0.5},
+{"name":"BOM Short Range","url":"http://www.bom.gov.au/australia/charts/msl_36hr_forecast.shtml","showtime":15000,"zoomratio":0.82},
 
-{"name":"BOM Chart","url":"http://www.bom.gov.au/australia/charts/4day_col.shtml","showtime":15000,"zoomratio":0.9},
+{"name":"BOM Chart","url":"http://www.bom.gov.au/australia/charts/4day_col.shtml","showtime":15000,"zoomratio":0.5},
 
 {"name":"BOM TAF YMMB","url":"file:///home/harrisonheli/bom-wx/bom-taf-ymmb.html","showtime":15000,"zoomratio":0.9},
 

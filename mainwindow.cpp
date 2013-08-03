@@ -14,8 +14,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    changeFullScreenMode();
 
    //Setup the toolbar
-   ui->mainToolBar->addAction(ui->webView->pageAction(QWebPage::Back));
-   ui->mainToolBar->addAction(ui->webView->pageAction(QWebPage::Forward));
+
+   ui->mainToolBar->addAction(QIcon::fromTheme("view-fullscreen"),"Fullscreen toggle",this,SLOT(changeFullScreenMode()));
+
+   ui->mainToolBar->addSeparator();
+
+   ui->mainToolBar->addAction(QIcon::fromTheme("go-previous"),"Back",this,SLOT(changeSlideBack()));
+   ui->mainToolBar->addAction(QIcon::fromTheme("go-next"),"Forward",this,SLOT(changeSlideForward()));
+
 
    action_paused = ui->mainToolBar->addAction(QIcon::fromTheme("media-playback-start"),"Pause",this,SLOT(setPaused()));
    action_resume = ui->mainToolBar->addAction(QIcon::fromTheme("media-playback-stop"),"Resume",this,SLOT(setResume()));
@@ -28,11 +34,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    timeLMT = new QLabel;
 
    QFont font = timeUTC->font ();
-   font.setPointSize(18);//set the font size here
+   font.setPointSize(20);//set the font size here
    timeUTC->setFont(font);
 
    font = timeLMT->font ();
-   font.setPointSize(18);//set the font size here
+   font.setPointSize(20);//set the font size here
    timeLMT->setFont(font);
 
 
@@ -152,6 +158,8 @@ void MainWindow::keyPressEvent( QKeyEvent* event ) {
     case Qt::Key_Left:     changeSlideBack(); break;
 
     case Qt::Key_P: setPauseOrResume(); break;
+
+    case Qt::Key_Space: setPauseOrResume(); break;
 
     default:
         event->ignore();

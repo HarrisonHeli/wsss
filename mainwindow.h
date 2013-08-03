@@ -43,15 +43,20 @@ private:
     void loadUrlFromFile();
     void createWebSlides();
 
-    void changeFullScreenMode();
 
-    void changeSlideForward();
-    void changeSlideBack();
+
+
 
 
 
 private slots:
+
+    void changeFullScreenMode();
+
     void changeSlide(bool go_forward = true);
+
+    void changeSlideForward();
+    void changeSlideBack();
 
     void updateClocks();
     void setPauseOrResume();
