@@ -27,10 +27,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    action_paused = ui->mainToolBar->addAction(QIcon::fromTheme("media-playback-start"),"Pause",this,SLOT(setPaused()));
    action_resume = ui->mainToolBar->addAction(QIcon::fromTheme("media-playback-stop"),"Resume",this,SLOT(setResume()));
 
-
-   ui->mainToolBar->addSeparator();
-
-
    timeUTC = new QLabel;
    timeLMT = new QLabel;
 
@@ -162,6 +158,10 @@ void MainWindow::keyPressEvent( QKeyEvent* event ) {
 
     case Qt::Key_Space: setPauseOrResume(); break;
 
+    case Qt::Key_F2: zoomIn(); break;
+
+    case Qt::Key_F3: zoomOut(); break;
+
     default:
         event->ignore();
         break;
@@ -290,6 +290,34 @@ void MainWindow::setResume()
     action_paused->setEnabled(true);
     action_paused->setVisible(true);
 }
+
+
+void MainWindow::zoomIn()
+{
+    QWebView *currentWebView;
+    QString nameWebView;
+
+    nameWebView = QString("webview") + QString::number(current_webslide_index);
+    currentWebView = ui->centralWidget->findChild<QWebView *>(nameWebView);
+
+    currentWebView->setZoomFactor(currentWebView->zoomFactor() * 1.1);
+
+}
+
+void MainWindow::zoomOut()
+{
+
+    QWebView *currentWebView;
+    QString nameWebView;
+
+    nameWebView = QString("webview") + QString::number(current_webslide_index);
+    currentWebView = ui->centralWidget->findChild<QWebView *>(nameWebView);
+
+    currentWebView->setZoomFactor(currentWebView->zoomFactor() * 0.9);
+
+
+}
+
 
 MainWindow::~MainWindow()
 {

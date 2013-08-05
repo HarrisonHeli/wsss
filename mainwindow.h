@@ -43,12 +43,6 @@ private:
     void loadUrlFromFile();
     void createWebSlides();
 
-
-
-
-
-
-
 private slots:
 
     void changeFullScreenMode();
@@ -62,6 +56,10 @@ private slots:
     void setPauseOrResume();
     void setPaused();
     void setResume();
+
+    void zoomIn();
+    void zoomOut();
+
 };
 
 #endif // MAINWINDOW_H
