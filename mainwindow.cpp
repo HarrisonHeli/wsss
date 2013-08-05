@@ -129,7 +129,7 @@ void MainWindow::createWebSlides()
 {
     for (int index =0; index < list_webslide.count(); index ++)
         {
-        QWebView *new_webview = new QWebView();
+        CustomWebView *new_webview = new CustomWebView();
 
         //So we can call the webview when we need it
         QString newObjectName = QString("webview") + QString::number(index);
@@ -138,6 +138,8 @@ void MainWindow::createWebSlides()
 
         new_webview->setUrl(list_webslide[index].getUrl());
         new_webview->setZoomFactor(list_webslide[index].getZoomRatio());
+
+        new_webview->startTimer(list_webslide[index].getRefreshTime());
 
         new_webview->hide();
 
@@ -159,15 +161,15 @@ void MainWindow::keyPressEvent( QKeyEvent* event ) {
 
     case Qt::Key_Right:     changeSlideForward(); break;
 
-    case Qt::Key_Left:     changeSlideBack(); break;
+    case Qt::Key_Left:      changeSlideBack(); break;
 
-    case Qt::Key_P: setPauseOrResume(); break;
+    case Qt::Key_P:         setPauseOrResume(); break;
 
-    case Qt::Key_Space: setPauseOrResume(); break;
+    case Qt::Key_Space:     setPauseOrResume(); break;
 
-    case Qt::Key_F2: zoomIn(); break;
+    case Qt::Key_F2:        zoomIn(); break;
 
-    case Qt::Key_F3: zoomOut(); break;
+    case Qt::Key_F3:        zoomOut(); break;
 
     default:
         event->ignore();
@@ -204,19 +206,19 @@ void MainWindow::changeSlide(bool go_forward)
     QString name = QString("wsss - ") + list_webslide[webslide_to_show_index].getName() + QString(" - ") + list_webslide[webslide_to_show_index].getUrl();
     this->setWindowTitle(name) ;
 
-    QWebView *currentWebView;
-    QWebView *nextWebView;
+    CustomWebView *currentWebView;
+    CustomWebView *nextWebView;
     QString nameWebView;
 
 
     nameWebView = QString("webview")  + QString::number(current_webslide_index);
-    currentWebView = ui->centralWidget->findChild<QWebView *>(nameWebView);
+    currentWebView = ui->centralWidget->findChild<CustomWebView *>(nameWebView);
 
     nameWebView = QString("webview") + QString::number(webslide_to_show_index);
-    nextWebView = ui->centralWidget->findChild<QWebView *>(nameWebView);
+    nextWebView = ui->centralWidget->findChild<CustomWebView *>(nameWebView);
 
     currentWebView->hide();
-    currentWebView->reload();
+    //currentWebView->reload();
 
     nextWebView->show();
     nextWebView->setFocus();
@@ -301,11 +303,11 @@ void MainWindow::setResume()
 
 void MainWindow::zoomIn()
 {
-    QWebView *currentWebView;
+    CustomWebView *currentWebView;
     QString nameWebView;
 
     nameWebView = QString("webview") + QString::number(current_webslide_index);
-    currentWebView = ui->centralWidget->findChild<QWebView *>(nameWebView);
+    currentWebView = ui->centralWidget->findChild<CustomWebView *>(nameWebView);
 
     currentWebView->setZoomFactor(currentWebView->zoomFactor() * 1.1);
 
@@ -314,11 +316,11 @@ void MainWindow::zoomIn()
 void MainWindow::zoomOut()
 {
 
-    QWebView *currentWebView;
+    CustomWebView *currentWebView;
     QString nameWebView;
 
     nameWebView = QString("webview") + QString::number(current_webslide_index);
-    currentWebView = ui->centralWidget->findChild<QWebView *>(nameWebView);
+    currentWebView = ui->centralWidget->findChild<CustomWebView *>(nameWebView);
 
     currentWebView->setZoomFactor(currentWebView->zoomFactor() * 0.9);
 

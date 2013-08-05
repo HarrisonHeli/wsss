@@ -8,7 +8,8 @@
 #include <QLCDNumber>
 #include <QLabel>
 
-#include"webslide.h"
+#include "webslide.h"
+#include "customwebview.h"
 
 namespace Ui {
 class MainWindow;

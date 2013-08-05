@@ -53,7 +53,6 @@ void WebSlide::setZoomRatio(double new_zoom_ratio)
 {
     if (new_zoom_ratio == 0) zoom_ratio = 0.1;
     else zoom_ratio = new_zoom_ratio;
-
 }
 
 double WebSlide::getZoomRatio()
@@ -63,7 +62,7 @@ double WebSlide::getZoomRatio()
 
 void WebSlide::setRefreshTime(unsigned int new_refresh_time)
 {
-    if (new_refresh_time <= 60*1000) refresh_time = 60*1000;
+    if (new_refresh_time <= 60*1000) refresh_time = 5*60*1000;
     else refresh_time = new_refresh_time;
 }
 unsigned int WebSlide::getRefreshTime()
