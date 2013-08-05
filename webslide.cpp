@@ -10,7 +10,9 @@ WebSlide::WebSlide(const WebSlide& ori_webslide)
     this->setName(ori_webslide.string_name);
     this->setUrl(ori_webslide.string_url);
     setShowTime(ori_webslide.show_time);
+    setRefreshTime(ori_webslide.refresh_time);
     setZoomRatio(ori_webslide.zoom_ratio);
+
 }
 
 
@@ -38,7 +40,8 @@ QString WebSlide::getUrl()
 
 void WebSlide::setShowTime(unsigned int new_show_time)
 {
-    show_time = new_show_time;
+    if (new_show_time <= 1000) show_time = 1000;
+    else show_time = new_show_time;
 }
 
 unsigned int WebSlide::getShowTime()
@@ -48,11 +51,22 @@ unsigned int WebSlide::getShowTime()
 
 void WebSlide::setZoomRatio(double new_zoom_ratio)
 {
-    zoom_ratio = new_zoom_ratio;
+    if (new_zoom_ratio == 0) zoom_ratio = 0.1;
+    else zoom_ratio = new_zoom_ratio;
 
 }
 
 double WebSlide::getZoomRatio()
 {
     return zoom_ratio;
+}
+
+void WebSlide::setRefreshTime(unsigned int new_refresh_time)
+{
+    if (new_refresh_time <= 60*1000) refresh_time = 60*1000;
+    else refresh_time = new_refresh_time;
+}
+unsigned int WebSlide::getRefreshTime()
+{
+    return refresh_time;
 }

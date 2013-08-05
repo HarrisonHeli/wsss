@@ -51,24 +51,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    webslide.setUrl("http://json.parser.online.fr/");
    webslide.setShowTime(15000);
    webslide.setZoomRatio(0.5);
+   webslide.setRefreshTime(10*60*1000);
 
    list_webslide.append(webslide);
 
    webslide.setUrl("http://www.bom.gov.au/products/IDR024.loop.shtml#skip/");
    webslide.setShowTime(15000);
    webslide.setZoomRatio(0.8);
+   webslide.setRefreshTime(10*60*1000);
 
    list_webslide.append(webslide);
 
    webslide.setUrl("file:///home/harrisonheli/bom-wx/bom-taf-ymmb-ymen.html");
    webslide.setShowTime(20000);
    webslide.setZoomRatio(0.7);
+   webslide.setRefreshTime(10*60*1000);
 
    list_webslide.append(webslide);
 
    webslide.setUrl("https://docs.google.com/spreadsheet/pub?key=0Ag-DRZCGuBxFdGRFTFE5SEpFbUIxZ3NDYUpjOU5lR0E&output=html");
    webslide.setShowTime(20000);
    webslide.setZoomRatio(1);
+   webslide.setRefreshTime(10*60*1000);
 
    list_webslide.append(webslide);
 
@@ -108,11 +112,14 @@ list_webslide.clear();
 
 for (int index =0; index < js_webslide_array.count(); index ++)
     {
+
+
     QJsonValueRef js_webslide_data =  js_webslide_array[index];
     webslide.setName(js_webslide_data.toObject().find("name").value().toString());
     webslide.setUrl(js_webslide_data.toObject().find("url").value().toString());
     webslide.setShowTime(js_webslide_data.toObject().find("showtime").value().toDouble());
     webslide.setZoomRatio(js_webslide_data.toObject().find("zoomratio").value().toDouble());
+    webslide.setRefreshTime(js_webslide_data.toObject().find("refreshtime").value().toDouble());
 
     list_webslide.append(webslide);
     }

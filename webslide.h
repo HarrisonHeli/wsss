@@ -7,6 +7,7 @@ class WebSlide
     QString string_name;
     QString string_url;
     unsigned int show_time;
+    unsigned int refresh_time;
     double zoom_ratio;
 
 public:
@@ -25,6 +26,9 @@ public:
     void setZoomRatio(double new_zoom_ratio);
     double getZoomRatio();
     
+    void setRefreshTime(unsigned int new_refresh_time);
+    unsigned int getRefreshTime();
+
     
 };
 
