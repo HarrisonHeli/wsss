@@ -55,6 +55,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
    list_webslide.append(webslide);
 
+   webslide.setUrl("file://readme.html");
+   webslide.setShowTime(15000);
+   webslide.setZoomRatio(0.8);
+   webslide.setRefreshTime(10*60*1000);
+
+   list_webslide.append(webslide);
+
    webslide.setUrl("http://www.bom.gov.au/products/IDR024.loop.shtml#skip/");
    webslide.setShowTime(15000);
    webslide.setZoomRatio(0.8);
