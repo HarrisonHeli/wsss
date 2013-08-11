@@ -79,18 +79,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    updateClocks();
    setResume();
 
-   loadUrlFromFile();
+   SettingsFilePath = "settings.json";
+   loadSettingsFromFile();
    createWebSlides();
    changeSlide(true);
 
 
 }
 
-void MainWindow::loadUrlFromFile()
+void MainWindow::loadSettingsFromFile()
 {
 QString settings;
 QFile file;
-file.setFileName("settings.json");
+file.setFileName(SettingsFilePath);
 file.open(QIODevice::ReadOnly | QIODevice::Text);
 settings = file.readAll();
 file.close();
@@ -112,8 +113,6 @@ list_webslide.clear();
 
 for (int index =0; index < js_webslide_array.count(); index ++)
     {
-
-
     QJsonValueRef js_webslide_data =  js_webslide_array[index];
     webslide.setName(js_webslide_data.toObject().find("name").value().toString());
     webslide.setUrl(js_webslide_data.toObject().find("url").value().toString());
@@ -147,12 +146,17 @@ void MainWindow::createWebSlides()
         }
 }
 
-void MainWindow::loadUrl(const QUrl &url)
-{
-    //This will load the comand line given url
-    ui->webView->load(url);
-}
 
+//****************************************************************
+//
+//      keyPressEvent
+//
+//****************************************************************
+/*
+ * This function is called when any key is pressed
+ * and the main window has user focus.
+ *
+ */
 void MainWindow::keyPressEvent( QKeyEvent* event ) {
     switch ( event->key() ) {
     case Qt::Key_Escape:    changeFullScreenMode(); break;
@@ -177,7 +181,22 @@ void MainWindow::keyPressEvent( QKeyEvent* event ) {
     }
 }
 
+//These are wrapper functions so the the key press actions can call them directly
+// and not have to pass parameters to indicate the direction requred.
 
+void MainWindow::changeSlideForward(){changeSlide(true);}
+
+void MainWindow::changeSlideBack(){changeSlide(false);}
+
+//******************************************************************************
+//
+//  changeSlide
+//
+//******************************************************************************
+/*
+ * Will work out what which webslide to show next and setup the timers
+ *
+ */
 void MainWindow::changeSlide(bool go_forward)
 {
     timerWebSlide.stop();
@@ -218,24 +237,12 @@ void MainWindow::changeSlide(bool go_forward)
     nextWebView = ui->centralWidget->findChild<CustomWebView *>(nameWebView);
 
     currentWebView->hide();
-    //currentWebView->reload();
-
     nextWebView->show();
     nextWebView->setFocus();
 
     current_webslide_index = webslide_to_show_index;
     setResume();
-
-
 }
-
-//These are wrapper functuins so the the key press actionscan call them directly
-// and not have to pass parameters to indicate the direction requred.
-
-void MainWindow::changeSlideForward(){changeSlide(true);}
-
-void MainWindow::changeSlideBack(){changeSlide(false);}
-
 
 
 void MainWindow::changeFullScreenMode()
@@ -253,30 +260,10 @@ void MainWindow::changeFullScreenMode()
 }
 
 
-void MainWindow::updateClocks()
-{
-timerClock.setSingleShot(true);
-timerClock.start(1000);
-
-QDateTime utc_date_time = QDateTime::currentDateTimeUtc();
-
-QDateTime local_date_time = QDateTime::currentDateTime();
-
-
-
-timeUTC->setText(utc_date_time.toString(" dd-hh:mm:ss") + " UTC ");
-
-timeLMT->setText(local_date_time.toString(" dd-hh:mm:ss") + " LMT ");
-
-}
-
-
 void MainWindow::setPauseOrResume()
 {
     if (!paused) setPaused();
     else setResume();
-
-
 }
 
 
@@ -324,6 +311,20 @@ void MainWindow::zoomOut()
 
     currentWebView->setZoomFactor(currentWebView->zoomFactor() * 0.9);
 
+
+}
+
+void MainWindow::updateClocks()
+{
+    timerClock.setSingleShot(true);
+    timerClock.start(1000);
+
+    QDateTime utc_date_time = QDateTime::currentDateTimeUtc();
+    QDateTime local_date_time = QDateTime::currentDateTime();
+
+
+    timeUTC->setText(utc_date_time.toString(" dd-hh:mm:ss") + " UTC ");
+    timeLMT->setText(local_date_time.toString(" dd-hh:mm:ss") + " LMT ");
 
 }
 

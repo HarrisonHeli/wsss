@@ -5,14 +5,15 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QUrl url;
-    if (argc > 1)
-        url = QUrl::fromUserInput(argv[1]);
-    else
-        url = QUrl("http://www.google.com/ncr");
+
+    // Look to see if a webslide settings file has been givn on the command line
+
+    if (argc == 1)
+        QString SettingsFilePath= argv[1];
+
 
     MainWindow w;
-   // w.loadUrl(url);
+
     w.show();
     
     return a.exec();

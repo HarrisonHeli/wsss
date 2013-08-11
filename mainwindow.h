@@ -23,11 +23,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     
-    void loadUrl(const QUrl& url);
     void keyPressEvent( QKeyEvent* event );
 
 private:
     Ui::MainWindow *ui;
+    QString SettingsFilePath;
+
     QList<WebSlide> list_webslide;
 
     int current_webslide_index;
@@ -41,7 +42,7 @@ private:
     QLabel *timeUTC;
     QLabel *timeLMT;
 
-    void loadUrlFromFile();
+    void loadSettingsFromFile();
     void createWebSlides();
 
 private slots:
