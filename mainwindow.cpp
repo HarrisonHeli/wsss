@@ -86,7 +86,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    updateClocks();
    setResume();
 
-   SettingsFilePath = "settings.json";
+   if (SettingsFilePath == "") SettingsFilePath = "settings.json";
+
    loadSettingsFromFile();
    createWebSlides();
    changeSlide(true);

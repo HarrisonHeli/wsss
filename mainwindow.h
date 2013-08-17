@@ -24,10 +24,11 @@ public:
     ~MainWindow();
     
     void keyPressEvent( QKeyEvent* event );
+    QString SettingsFilePath;
 
 private:
     Ui::MainWindow *ui;
-    QString SettingsFilePath;
+
 
     QList<WebSlide> list_webslide;
 
