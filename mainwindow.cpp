@@ -42,6 +42,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    ui->mainToolBar->addWidget(timeUTC);
    ui->mainToolBar->addWidget(timeLMT);
 
+   ui->mainToolBar->addSeparator();
+   timeRemainingBar = new QProgressBar;
+   timeRemainingBar->setFormat("%v");
+
+
+   ui->mainToolBar->addWidget(timeRemainingBar);
+
    //Setup the webView
    ui->webView->setZoomFactor(1.0);
 
@@ -229,6 +236,9 @@ void MainWindow::changeSlide(bool go_forward)
     unsigned int timeout = list_webslide[webslide_to_show_index].getShowTime();
     timerWebSlide.start(timeout);
 
+    timeRemainingBar->setValue(0);
+    timeRemainingBar->setMaximum(timeout);
+
 
     QString name = QString("wsss - ") + list_webslide[webslide_to_show_index].getName() + QString(" - ") + list_webslide[webslide_to_show_index].getUrl();
     this->setWindowTitle(name) ;
@@ -333,6 +343,8 @@ void MainWindow::updateClocks()
 
     timeUTC->setText(utc_date_time.toString(" dd-hh:mm:ss") + " UTC ");
     timeLMT->setText(local_date_time.toString(" dd-hh:mm:ss") + " LMT ");
+
+    timeRemainingBar->setValue(timeRemainingBar->value() + 1000);
 
 }
 

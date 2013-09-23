@@ -7,6 +7,7 @@
 #include <QJsonDocument>
 #include <QLCDNumber>
 #include <QLabel>
+#include <QProgressBar>
 
 #include "webslide.h"
 #include "customwebview.h"
@@ -42,6 +43,8 @@ private:
 
     QLabel *timeUTC;
     QLabel *timeLMT;
+
+    QProgressBar *timeRemainingBar;
 
     void loadSettingsFromFile();
     void createWebSlides();
