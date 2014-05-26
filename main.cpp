@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
     MainWindow w;
 
 
-    // Look to see if a webslide settings file has been givn on the command line
+    // Look to see if a webslide settings file has been given on the command line
 
 
     if (argc >= 2)
