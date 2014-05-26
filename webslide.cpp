@@ -4,14 +4,14 @@ WebSlide::WebSlide()
 {
 }
 
-WebSlide::WebSlide(const WebSlide& ori_webslide)
+WebSlide::WebSlide(const WebSlide& source_webslide)
 {
 
-    this->setName(ori_webslide.string_name);
-    this->setUrl(ori_webslide.string_url);
-    setShowTime(ori_webslide.show_time);
-    setRefreshTime(ori_webslide.refresh_time);
-    setZoomRatio(ori_webslide.zoom_ratio);
+    this->setName(source_webslide.string_name);
+    this->setUrl(source_webslide.string_url);
+    setShowTime(source_webslide.show_time);
+    setRefreshTime(source_webslide.refresh_time);
+    setZoomRatio(source_webslide.zoom_ratio);
 
 }
 
@@ -40,7 +40,7 @@ QString WebSlide::getUrl()
 
 void WebSlide::setShowTime(unsigned int new_show_time)
 {
-    if (new_show_time <= 1000) show_time = 1000;
+    if (new_show_time <= MIN_SHOW_TIME) show_time = MIN_SHOW_TIME;
     else show_time = new_show_time;
 }
 
@@ -51,7 +51,7 @@ unsigned int WebSlide::getShowTime()
 
 void WebSlide::setZoomRatio(double new_zoom_ratio)
 {
-    if (new_zoom_ratio == 0) zoom_ratio = 0.1;
+    if (new_zoom_ratio <= MIN_ZOOM_RATIO) zoom_ratio = MIN_ZOOM_RATIO; // if zero system will crash
     else zoom_ratio = new_zoom_ratio;
 }
 
@@ -62,7 +62,7 @@ double WebSlide::getZoomRatio()
 
 void WebSlide::setRefreshTime(unsigned int new_refresh_time)
 {
-    if (new_refresh_time <= 60*1000) refresh_time = 5*60*1000;
+    if (new_refresh_time <= MIN_REFESH_TIME) refresh_time = MIN_REFESH_TIME; // Limit the minium refresh time, defined in webslide.h
     else refresh_time = new_refresh_time;
 }
 unsigned int WebSlide::getRefreshTime()
