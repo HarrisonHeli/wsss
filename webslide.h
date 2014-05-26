@@ -24,7 +24,7 @@ class WebSlide
 
 public:
     WebSlide();                                // Creates a webslide with default settings
-    WebSlide(const WebSlide& source_webslide); //copies the settings from the source_webslide into this slide
+    WebSlide(const WebSlide& source_webslide); // Copies the settings from the source_webslide into this slide
 
     void setName(const QString& new_name);
     QString getName();

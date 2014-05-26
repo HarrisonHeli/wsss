@@ -2,6 +2,11 @@
 
 WebSlide::WebSlide()
 {
+    this->string_name = "null";
+    this->string_url = "null";
+    this->show_time = MIN_SHOW_TIME;
+    this->refresh_time = MIN_REFESH_TIME;
+    this->zoom_ratio = MIN_ZOOM_RATIO;
 }
 
 WebSlide::WebSlide(const WebSlide& source_webslide)
