@@ -26,6 +26,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    //The main window goes to full screen mode by default
    this->changeFullScreenMode();
 
+  QIcon icon;
+  icon.setThemeName("gnome");
+
+   qDebug() << "wsss/mainwindow.cpp-QIconThemePath:" << icon.themeSearchPaths();
+   qDebug() << "wsss/mainwindow.cpp-QIcon:" << icon.themeName();
 
    /*Now create the toolbar -
    *
@@ -34,16 +39,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    *                    Progress bar showing how many second left on the current slide
    */
 
-   ui->mainToolBar->addAction(QIcon::fromTheme("view-fullscreen"),"Fullscreen toggle",this,SLOT(changeFullScreenMode()));
+   ui->mainToolBar->addAction(icon.fromTheme("view-fullscreen"),"Fullscreen toggle",this,SLOT(changeFullScreenMode()));
 
    ui->mainToolBar->addSeparator();
 
-   ui->mainToolBar->addAction(QIcon::fromTheme("go-previous"),"Back",this,SLOT(changeSlideBack()));
-   ui->mainToolBar->addAction(QIcon::fromTheme("go-next"),"Forward",this,SLOT(changeSlideForward()));
+
+   ui->mainToolBar->addAction(icon.fromTheme("go-previous"),"Back",this,SLOT(changeSlideBack()));
+   ui->mainToolBar->addAction(icon.fromTheme("go-next"),"Forward",this,SLOT(changeSlideForward()));
 
 
-   action_paused = ui->mainToolBar->addAction(QIcon::fromTheme("media-playback-start"),"Pause",this,SLOT(setPaused()));
-   action_resume = ui->mainToolBar->addAction(QIcon::fromTheme("media-playback-stop"),"Resume",this,SLOT(setResume()));
+   action_paused = ui->mainToolBar->addAction(icon.fromTheme("media-playback-start"),"Pause",this,SLOT(setPaused()));
+   action_resume = ui->mainToolBar->addAction(icon.fromTheme("media-playback-stop"),"Resume",this,SLOT(setResume()));
 
    timeUTC = new QLabel;
    timeLMT = new QLabel;
