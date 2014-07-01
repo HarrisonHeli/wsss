@@ -24,6 +24,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     
+    void loadSettingsFromFile();
+
     void keyPressEvent( QKeyEvent* event );
     QString SettingsFilePath;
 
@@ -46,8 +48,9 @@ private:
 
     QProgressBar *timeRemainingBar;
 
-    void loadSettingsFromFile();
-    void createWebSlides();
+
+    void loadDefaultSettings();
+    void createWebSlideViews();
 
 private slots:
 

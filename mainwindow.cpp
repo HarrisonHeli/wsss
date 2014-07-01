@@ -67,77 +67,70 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
    ui->mainToolBar->addWidget(timeRemainingBar);
 
-   //Setup the webView
+   //Setup the DefaultWebView
    ui->DefaultWebView->setZoomFactor(1.0);
 
    current_webslide_index = 0;
 
-   WebSlide webslide;
-   webslide.setUrl("http://json.parser.online.fr/");
-   webslide.setShowTime(15000);
-   webslide.setZoomRatio(0.5);
-   webslide.setRefreshTime(10*60*1000);
-
-   list_webslide.append(webslide);
-
-   webslide.setUrl("file://readme.html");
-   webslide.setShowTime(15000);
-   webslide.setZoomRatio(0.8);
-   webslide.setRefreshTime(10*60*1000);
-
-   list_webslide.append(webslide);
-
-   webslide.setUrl("http://www.bom.gov.au/products/IDR024.loop.shtml#skip/");
-   webslide.setShowTime(15000);
-   webslide.setZoomRatio(0.8);
-   webslide.setRefreshTime(10*60*1000);
-
-   list_webslide.append(webslide);
-
-   webslide.setUrl("file:///home/harrisonheli/bom-wx/bom-taf-ymmb-ymen.html");
-   webslide.setShowTime(20000);
-   webslide.setZoomRatio(0.7);
-   webslide.setRefreshTime(10*60*1000);
-
-   list_webslide.append(webslide);
-
-
-
    updateClocks();
-   setResume();
-
-   if (SettingsFilePath == "") SettingsFilePath = "settings.json";
-
-   loadSettingsFromFile();
-   createWebSlides();
-   changeSlide(true);
-
 
 }
 
+/******************************************************************************
+ *
+ *              MainWindow::loadSettingsFromFile()
+ *
+ ******************************************************************************
+ */
+
 void MainWindow::loadSettingsFromFile()
 {
-QString settings;
+QString stringFileContents;
 QFile file;
 file.setFileName(SettingsFilePath);
+qDebug() << "wsss/mainwindow.cpp-SettingsFilePath:" << SettingsFilePath;
+
 file.open(QIODevice::ReadOnly | QIODevice::Text);
-settings = file.readAll();
+stringFileContents = file.readAll();
 file.close();
 
-QJsonDocument js_doc = QJsonDocument::fromJson(settings.toUtf8());
+//Create a json object from the file contents
+//If there are any failures, this code will return.
 
-    if (js_doc.isNull()) return;
+QJsonDocument js_doc = QJsonDocument::fromJson(stringFileContents.toUtf8());
+
+    if (js_doc.isNull()) {
+                            this->loadDefaultSettings();
+                            return;
+                         };
 
 QJsonObject js_webslide = js_doc.object();
 
-    if (js_webslide.isEmpty()) return;
+    if (js_webslide.isEmpty())  {
+                                this->loadDefaultSettings();
+                                return;
+                                };
 
 QJsonArray js_webslide_array = js_webslide.find("webslides").value().toArray();
 
-    if (js_webslide_array.isEmpty()) return;
+    if (js_webslide_array.isEmpty()) {
+                                     this->loadDefaultSettings();
+                                     return;
+                                     };
 
-WebSlide webslide;
+
+
+
+/* If we have got this far then we have valid data from the file
+ * so it is safe to wipe the webslide list and insert the new slides
+ */
 list_webslide.clear();
+
+
+//Object to hold  the incomming settings
+//Its values will be copied into a new object on the list_webslides
+WebSlide webslide;
+
 
 for (int index =0; index < js_webslide_array.count(); index ++)
     {
@@ -150,10 +143,76 @@ for (int index =0; index < js_webslide_array.count(); index ++)
 
     list_webslide.append(webslide);
     }
+
+ this->createWebSlideViews();
+ this->changeSlide(true);
 }
 
-void MainWindow::createWebSlides()
+/******************************************************************************
+ *
+ *              MainWindow::loadDefaultSettings()
+ *
+ ******************************************************************************
+ */
+
+void MainWindow::loadDefaultSettings()
 {
+    /* If the settings file could not be loaded, these are the default
+     * webslides that will be loaded instead
+     */
+
+    /* Object to hold  the incomming settings
+     * Its values will be copied into a new object on the list_webslides
+     */
+
+    WebSlide webslide;
+
+    list_webslide.clear();
+
+
+    webslide.setUrl("http://json.parser.online.fr/");
+    webslide.setShowTime(15000);
+    webslide.setZoomRatio(0.5);
+    webslide.setRefreshTime(10*60*1000);
+
+    list_webslide.append(webslide);
+
+    webslide.setUrl("file://readme.html");
+    webslide.setShowTime(15000);
+    webslide.setZoomRatio(0.8);
+    webslide.setRefreshTime(10*60*1000);
+
+    list_webslide.append(webslide);
+
+    webslide.setUrl("http://www.bom.gov.au/products/IDR024.loop.shtml#skip/");
+    webslide.setShowTime(15000);
+    webslide.setZoomRatio(0.8);
+    webslide.setRefreshTime(10*60*1000);
+
+    list_webslide.append(webslide);
+
+    webslide.setUrl("file:///home/harrisonheli/bom-wx/bom-taf-ymmb-ymen.html");
+    webslide.setShowTime(20000);
+    webslide.setZoomRatio(0.7);
+    webslide.setRefreshTime(10*60*1000);
+
+    list_webslide.append(webslide);
+
+
+    this->createWebSlideViews();
+    this->changeSlide(true);
+}
+
+/******************************************************************************
+ *
+ *              MainWindow::createWebSlides()
+ *
+ ******************************************************************************
+ */
+void MainWindow::createWebSlideViews()
+{
+    /* todo: remove existing webslideviews */
+
     for (int index =0; index < list_webslide.count(); index ++)
         {
         WebSlideView *new_webview = new WebSlideView();

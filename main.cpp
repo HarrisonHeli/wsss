@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     //all the visual stuff sits inside of this window object
 
 
-    qDebug() << "WSSS App path : " << qApp->applicationDirPath();
+    qDebug() << "wsss/main.cpp-App path: " << qApp->applicationDirPath();
 
 
    /* Loading Custom settings file
@@ -46,7 +46,8 @@ int main(int argc, char *argv[])
         else
             WebSlideApplicationWindow.SettingsFilePath = "";
 
-    // The loading of the file will be done in "mainwindow.cpp"
+
+    WebSlideApplicationWindow.loadSettingsFromFile();
 
 
     WebSlideApplicationWindow.show();
