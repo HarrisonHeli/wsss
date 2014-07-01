@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 
     if (argc >= 2) WebSlideApplicationWindow.SettingsFilePath = argv[1];
         else
-            WebSlideApplicationWindow.SettingsFilePath = "";
+            WebSlideApplicationWindow.SettingsFilePath = "settings.json";
 
 
     WebSlideApplicationWindow.loadSettingsFromFile();
