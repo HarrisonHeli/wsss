@@ -6,15 +6,33 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
 
+   /*Link up the two main timers to the change slide and change clocks functions
+   * timerWebSlide triggers when the sile should be changed
+   * timerClock triggers when the time display on the menu bar should be updated
+   */
+
    connect(&timerWebSlide, SIGNAL(timeout()), this, SLOT(changeSlide()));
    connect(&timerClock,SIGNAL(timeout()), this, SLOT(updateClocks()));
 
+
+
+   /* Loads up all the staticly defined UI elements
+    * The main window is the only item we need but we have to give it a default view
+    * so we create a DefaultWebView that we will replace later on
+    */
    ui->setupUi(this);
-   ui->webView->hide();
+   ui->DefaultWebView->hide(); // Hide the defaul webView  show it later in the function
 
-   changeFullScreenMode();
+   //The main window goes to full screen mode by default
+   this->changeFullScreenMode();
 
-   //Setup the toolbar
+
+   /*Now create the toolbar -
+   *
+   * The toolbar has :  a number of navigation buttons
+   *                    UTC and Local time
+   *                    Progress bar showing how many second left on the current slide
+   */
 
    ui->mainToolBar->addAction(QIcon::fromTheme("view-fullscreen"),"Fullscreen toggle",this,SLOT(changeFullScreenMode()));
 
@@ -50,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
    ui->mainToolBar->addWidget(timeRemainingBar);
 
    //Setup the webView
-   ui->webView->setZoomFactor(1.0);
+   ui->DefaultWebView->setZoomFactor(1.0);
 
    current_webslide_index = 0;
 
@@ -83,12 +101,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
    list_webslide.append(webslide);
 
-   webslide.setUrl("https://docs.google.com/spreadsheet/pub?key=0Ag-DRZCGuBxFdGRFTFE5SEpFbUIxZ3NDYUpjOU5lR0E&output=html");
-   webslide.setShowTime(20000);
-   webslide.setZoomRatio(1);
-   webslide.setRefreshTime(10*60*1000);
 
-   list_webslide.append(webslide);
 
    updateClocks();
    setResume();
@@ -143,7 +156,7 @@ void MainWindow::createWebSlides()
 {
     for (int index =0; index < list_webslide.count(); index ++)
         {
-        CustomWebView *new_webview = new CustomWebView();
+        WebSlideView *new_webview = new WebSlideView();
 
         //So we can call the webview when we need it
         QString newObjectName = QString("webview") + QString::number(index);
@@ -243,20 +256,20 @@ void MainWindow::changeSlide(bool go_forward)
     QString name = QString("wsss - ") + list_webslide[webslide_to_show_index].getName() + QString(" - ") + list_webslide[webslide_to_show_index].getUrl();
     this->setWindowTitle(name) ;
 
-    CustomWebView *currentWebView;
-    CustomWebView *nextWebView;
-    QString nameWebView;
+    WebSlideView *currentWebSlideView;
+    WebSlideView *nextWebSlideView;
+    QString nameWebSlideView;
 
 
-    nameWebView = QString("webview")  + QString::number(current_webslide_index);
-    currentWebView = ui->centralWidget->findChild<CustomWebView *>(nameWebView);
+    nameWebSlideView = QString("webview")  + QString::number(current_webslide_index);
+    currentWebSlideView = ui->centralWidget->findChild < WebSlideView *>(nameWebSlideView);
 
-    nameWebView = QString("webview") + QString::number(webslide_to_show_index);
-    nextWebView = ui->centralWidget->findChild<CustomWebView *>(nameWebView);
+    nameWebSlideView = QString("webview") + QString::number(webslide_to_show_index);
+    nextWebSlideView = ui->centralWidget->findChild < WebSlideView *>(nameWebSlideView);
 
-    currentWebView->hide();
-    nextWebView->show();
-    nextWebView->setFocus();
+    currentWebSlideView->hide();
+    nextWebSlideView->show();
+    nextWebSlideView->setFocus();
 
     current_webslide_index = webslide_to_show_index;
     setResume();
@@ -308,11 +321,11 @@ void MainWindow::setResume()
 
 void MainWindow::zoomIn()
 {
-    CustomWebView *currentWebView;
+    WebSlideView *currentWebView;
     QString nameWebView;
 
     nameWebView = QString("webview") + QString::number(current_webslide_index);
-    currentWebView = ui->centralWidget->findChild<CustomWebView *>(nameWebView);
+    currentWebView = ui->centralWidget->findChild< WebSlideView *>(nameWebView);
 
     currentWebView->setZoomFactor(currentWebView->zoomFactor() * 1.1);
 
@@ -321,11 +334,11 @@ void MainWindow::zoomIn()
 void MainWindow::zoomOut()
 {
 
-    CustomWebView *currentWebView;
+    WebSlideView *currentWebView;
     QString nameWebView;
 
     nameWebView = QString("webview") + QString::number(current_webslide_index);
-    currentWebView = ui->centralWidget->findChild<CustomWebView *>(nameWebView);
+    currentWebView = ui->centralWidget->findChild< WebSlideView *>(nameWebView);
 
     currentWebView->setZoomFactor(currentWebView->zoomFactor() * 0.9);
 

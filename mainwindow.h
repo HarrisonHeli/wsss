@@ -10,7 +10,7 @@
 #include <QProgressBar>
 
 #include "webslide.h"
-#include "customwebview.h"
+#include "webslideview.h"
 
 namespace Ui {
 class MainWindow;

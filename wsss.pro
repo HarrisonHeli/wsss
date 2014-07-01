@@ -14,10 +14,10 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     webslide.cpp \
-    customwebview.cpp
+    webslideview.cpp
 
 HEADERS  += mainwindow.h \
     webslide.h \
-    customwebview.h
+    webslideview.h
 
 FORMS    += mainwindow.ui
