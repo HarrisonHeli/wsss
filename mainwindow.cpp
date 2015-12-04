@@ -228,8 +228,13 @@ void MainWindow::createWebSlideViews()
 
         new_webview->setObjectName(newObjectName);
 
-        //new_webview->setUrl(list_webslide[index].getUrl());
+        // The line below seams to seg fault the app.
+        // new_webview->setUrl(list_webslide[index].getUrl());
+
+        // This does not seam to cause crashes.
         new_webview->load(list_webslide[index].getUrl());
+
+
         new_webview->setZoomFactor(list_webslide[index].getZoomRatio());
 
         new_webview->startTimer(list_webslide[index].getRefreshTime());
