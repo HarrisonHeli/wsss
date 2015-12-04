@@ -7,7 +7,11 @@
 QT       += core gui webkitwidgets
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkit
 
+
 TARGET = wsss
+target.path = /opt/wsss/
+INSTALLS += target
+
 TEMPLATE = app
 
 

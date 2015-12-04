@@ -40,8 +40,8 @@ private:
     QAction *action_paused;
     QAction *action_resume;
 
-    QTimer timerWebSlide;
-    QTimer timerClock;
+    QTimer timerWebSlide; // How long the page should be shown for.
+    QTimer timerClock;  // The time on the top of the menu bar
 
     QLabel *timeUTC;
     QLabel *timeLMT;
